@@ -10,10 +10,9 @@ namespace KalkulatorStatystyczny
     {
         static void Main(string[] args)
         {
-            int intNumberOfItems;
+            int intNumberOfItems; 
             while (true)
-            {
-                    
+            {                    
                 Console.Write("Program: Kalkulator statystyczny.\nPodaj liczbę elementów zestawu danych: ");
                 string stringNumberOfItems = Console.ReadLine();
                     if(int.TryParse(stringNumberOfItems, out intNumberOfItems) || intNumberOfItems >= 1)
