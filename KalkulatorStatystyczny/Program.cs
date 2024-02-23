@@ -10,58 +10,79 @@ namespace KalkulatorStatystyczny
     {
         static void Main(string[] args)
         {
-            int intNumberOfItems; 
-            while (true)
-            {                    
-                Console.Write("Program: Kalkulator statystyczny.\nPodaj liczbę elementów zestawu danych: ");
-                string stringNumberOfItems = Console.ReadLine();
-                    if(int.TryParse(stringNumberOfItems, out intNumberOfItems) || intNumberOfItems >= 1)
-                        {
-                        break;
-                        }
-                    else
-                        {
-                            Console.WriteLine("Wprowadzono niepoprawną wartość.\n");                    
-                        }              
-            }
+            int intNumberOfItems = ReadNumberOfItems();
             Console.WriteLine();
 
-            //--------------------------------------------------------------------------------
+            double[] items = ReadItems(intNumberOfItems);
+            Console.WriteLine();
 
-            List<double> items = [];
-                        
-            Console.Write("Wprowadź dane liczbowe: \n");
+            int intNumberOfOperation = ChoiceNumberOfOperation();
+            Console.WriteLine();
 
-            double doubleItem;
-            for(int i = 1; i <= intNumberOfItems;)
+            Calculate(items, intNumberOfOperation);
+        }
+
+        //Metods:
+
+        private static int ReadNumberOfItems()
+        {
+            int intNumberOfItems;
+            while (true)
             {
-                Console.Write(i + ". Wprowadź liczbę: ");
-                string stringItem = Console.ReadLine();
-                if (double.TryParse(stringItem, out doubleItem))
+                Console.Write("Program: Kalkulator statystyczny.\nPodaj liczbę elementów zestawu danych: ");
+                string stringNumberOfItems = Console.ReadLine();
+                if (int.TryParse(stringNumberOfItems, out intNumberOfItems) || intNumberOfItems >= 1)
                 {
-                    items.Add(doubleItem);
-                    i++;
+                    break;
                 }
                 else
                 {
                     Console.WriteLine("Wprowadzono niepoprawną wartość.\n");
                 }
             }
+            return intNumberOfItems;
             Console.WriteLine();
+        }
 
-            //--------------------------------------------------------------------------------
+        private static double[] ReadItems(int intNumberOfItems)
+        {
+            Console.Write("Wprowadź dane liczbowe: \n");
+            double doubleItem;
+            double[] items = new double[intNumberOfItems];
+            int numberOfItem = 1;
+            for (int i = 0; i < intNumberOfItems; i++)
+            {
+                Console.Write($"{numberOfItem}. Wprowadź liczbę: ");
+                string stringItem = Console.ReadLine();
 
-            int intOperationNumer;
+                if (double.TryParse(stringItem, out doubleItem))
+                {
+                    items[i] = doubleItem;
+                    numberOfItem++;
+                }
+                else
+                {
+                    Console.WriteLine("Wprowadzono niepoprawną wartość.\n");
+                    i--;
+                }
+            }
+            return items;
+        }
+
+        private static int ChoiceNumberOfOperation()
+        {
+            int intNumberOfOperation;
             while (true)
             {
-            Console.WriteLine(@"Wybierz operację statystyczną:
-            1. Średnia arytmetyczna
-            2. Największa liczba
-            3. Najmniejsza liczba
-            4. Suma wszystkich liczb");
+                Console.WriteLine("Wybierz operację statystyczną:");
+                string[] Operations = { "1. Średnia arytmetyczna", "2. Największa liczba", "3. Najmniejsza liczba", "4. Suma wszystkich liczb" };
+                foreach (string operation in Operations)
+                {
+                    Console.WriteLine(operation);
+                }
 
-                string stringOperationNumer = Console.ReadLine();
-                if (int.TryParse(stringOperationNumer, out intOperationNumer) && intOperationNumer >= 1 && intOperationNumer <= 4)
+                string stringNumberOfOperation = Console.ReadLine();
+                if (int.TryParse(stringNumberOfOperation, out intNumberOfOperation) && intNumberOfOperation >= 1 && intNumberOfOperation <= Operations.Length)
                 {
                     break;
                 }
@@ -70,20 +91,25 @@ namespace KalkulatorStatystyczny
                     Console.WriteLine("Wprowadzono niepoprawną wartość.");
                 }
             }
-            Console.WriteLine("Twój wybór: " + intOperationNumer);
-            Console.WriteLine();
+            Console.WriteLine($"Twój wybór: {intNumberOfOperation}");
+            return intNumberOfOperation;
+        }
 
-            //--------------------------------------------------------------------------------
-
-            switch (intOperationNumer)
+        private static void Calculate(double[] items, int intNumberOfOperation)
+        {
+            switch (intNumberOfOperation)
             {
-                case 1: Console.WriteLine("Średnia arytmetyczna wynosi: " + items.Average());
+                case 1:
+                    Calculations.Average(items);
                     break;
-                case 2: Console.WriteLine("Największa wprowadzona liczba to: " + items.Max());
+                case 2:
+                    Calculations.ItemMax(items);
                     break;
-                case 3: Console.WriteLine("Najmniejsza wprowadzona liczba to: " + items.Min());
+                case 3:
+                    Calculations.ItemMin(items);
                     break;
-                case 4: Console.WriteLine("Suma liczb wynosi: " + items.Sum());
+                case 4:
+                    Calculations.SumOfItems(items);
                     break;
             }
         }
