@@ -49,24 +49,25 @@ namespace KalkulatorStatystyczny
             Console.Write("Wprowadź dane liczbowe: \n");
             double doubleItem;
             double[] items = new double[intNumberOfItems];
-            int numberOfItem = 1;
             for (int i = 0; i < intNumberOfItems; i++)
             {
-                Console.Write($"{numberOfItem}. Wprowadź liczbę: ");
-                string stringItem = Console.ReadLine();
+                while (true)
+                {
+                    Console.Write($"{i+1}. Wprowadź liczbę: ");
+                    string stringItem = Console.ReadLine();
 
-                if (double.TryParse(stringItem, out doubleItem))
-                {
-                    items[i] = doubleItem;
-                    numberOfItem++;
-                }
-                else
-                {
-                    Console.WriteLine("Wprowadzono niepoprawną wartość.\n");
-                    i--;
-                }
+                    if (double.TryParse(stringItem, out doubleItem))
+                    {
+                        items[i] = doubleItem;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Wprowadzono niepoprawną wartość.\n");
+                    }
+                }                
             }
-            return items;
+        return items;
         }
 
         private static int ChoiceNumberOfOperation()
@@ -100,16 +101,20 @@ namespace KalkulatorStatystyczny
             switch (intNumberOfOperation)
             {
                 case 1:
-                    Calculations.Average(items);
+                    double average = Calculations.Average(items);
+                    Console.WriteLine($"Średnia arytmetyczna wynosi: = {average}");                    
                     break;
                 case 2:
-                    Calculations.ItemMax(items);
+                    double itemMax = Calculations.ItemMax(items);
+                    Console.WriteLine($"Największa wprowadzona liczba to: {itemMax}");                    
                     break;
                 case 3:
-                    Calculations.ItemMin(items);
+                    double itemMin = Calculations.ItemMin(items);
+                    Console.WriteLine($"Najmniejsza wprowadzona liczba to: {itemMin}");
                     break;
                 case 4:
-                    Calculations.SumOfItems(items);
+                    double sumOfItems = Calculations.SumOfItems(items);
+                    Console.WriteLine($"Suma liczb wynosi: {sumOfItems}");
                     break;
             }
         }
