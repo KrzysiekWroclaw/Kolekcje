@@ -7,7 +7,7 @@ using System.Threading.Channels;
 namespace KalkulatorStatystyczny
 {
     public class Program
-    {
+    {   //test
         static void Main(string[] args)
         {
             int intNumberOfItems = ReadNumberOfItems();
