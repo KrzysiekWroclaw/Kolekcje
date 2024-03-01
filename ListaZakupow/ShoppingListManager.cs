@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ListaZakupow
 {
-    public class Calculate
+    public class ShoppingListManager
     {
         public static void AddProductToList(List<string> listOfProducts)
         {
@@ -39,27 +39,44 @@ namespace ListaZakupow
             string product = Console.ReadLine();
 
 
-            try
-            {   int indexOflistOfProducts = 0;
-                string itemOflistOfProducts = listOfProducts[indexOflistOfProducts];
+            try //usunąć is dać pętlę
+            {
+                int indexOflistOfProducts = 0; //tą zmienną usunąć
+                string itemOflistOfProducts = listOfProducts[indexOflistOfProducts]; //usunąć
                 char firstLetterItemOflistOfProducts = itemOflistOfProducts[0];
                 int i = 0;
 
-           
-                    if (listOfProducts.Contains(product))
+
+                string? foundElement = null;
+                foreach (string item in listOfProducts)
+                {
+                    int result = string.Compare(item, product, true);
+
+                    if (result == 0)
                     {
-                        listOfProducts.Remove(product);
-                        Console.WriteLine($"\nProdukt \"{product}\" usunięty z listy zakupów!\n");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Artykułu \"{product}\" nie ma na liście!\n");
+                        foundElement = item;
+                        break;
                     }
                 }
-            catch(ArgumentOutOfRangeException e)
+                if (foundElement != null)
+                {
+                    listOfProducts.Remove(foundElement);
+                }
+
+                //if (listOfProducts.Contains(product))
+                //{
+                //    listOfProducts.Remove(product);
+                //    Console.WriteLine($"\nProdukt \"{product}\" usunięty z listy zakupów!\n");
+                //}
+                //else
+                //{
+                //    Console.WriteLine($"Artykułu \"{product}\" nie ma na liście!\n");
+                //}
+            }
+            catch (ArgumentOutOfRangeException e)
             {
                 Console.WriteLine("Koszyk pusty. Brak produktów do usunięcia.\n");
-            }
+            } //string Compare - wykorzystać tą funkcję
 
             //else
             //{
@@ -87,48 +104,52 @@ namespace ListaZakupow
 
         public static int ChoiseOperations(List<string> listOfOperations)
         {
-                int intNumberOfOperation;
-                
-            
-                Console.WriteLine("Wybierz operację:\n");
-                foreach (string operation in listOfOperations)
-                {
-                    Console.WriteLine(operation);
-                }
-                string stringNumberOfOperation = Console.ReadLine();
+            int intNumberOfOperation;
 
-                if (int.TryParse(stringNumberOfOperation, out intNumberOfOperation) && intNumberOfOperation >= 1 && intNumberOfOperation <= listOfOperations.Count)
-                {
-                    Console.WriteLine($"Twój wybór: {intNumberOfOperation}\n");
-                    return intNumberOfOperation;
-                }
-                else
-                {
-                    Console.WriteLine("Wprowadzono niepoprawną wartość.\n");
-                }
-            return intNumberOfOperation;    
+
+            Console.WriteLine("Wybierz operację:\n");
+            foreach (string operation in listOfOperations)
+            {
+                Console.WriteLine(operation);
+            }
+            string stringNumberOfOperation = Console.ReadLine();
+
+            if (int.TryParse(stringNumberOfOperation, out intNumberOfOperation)
+            && intNumberOfOperation >= 1
+            && intNumberOfOperation <= listOfOperations.Count)
+            {
+                Console.WriteLine($"Twój wybór: {intNumberOfOperation}\n");
+                return intNumberOfOperation;
+            }
+            else
+            {
+                Console.WriteLine("Wprowadzono niepoprawną wartość.\n");
+            }
+            return intNumberOfOperation;
         }
 
-        public static void PerformOperation(List<string> listOfOperations, int intNumberOfOperation, List<string> listOfProducts)
+        public static void PerformOperation(List<string> listOfOperations, //usunąć listofoperation
+            int intNumberOfOperation,
+            List<string> listOfProducts)
         {
             bool cont = true;
             while (cont)
             {
                 if (intNumberOfOperation == 1)
                 {
-                    Calculate.AddProductToList(listOfProducts);
-                    Calculate.DisplayActualListOfProducts(listOfProducts);
+                    ShoppingListManager.AddProductToList(listOfProducts);
+                    ShoppingListManager.DisplayActualListOfProducts(listOfProducts);
                     break;
                 }
                 else if (intNumberOfOperation == 2)
                 {
-                    Calculate.DisplayActualListOfProducts(listOfProducts);
+                    ShoppingListManager.DisplayActualListOfProducts(listOfProducts);
                     break;
                 }
                 else if (intNumberOfOperation == 3)
                 {
-                    Calculate.RemoveProductFromList(listOfProducts);
-                    Calculate.DisplayActualListOfProducts(listOfProducts);
+                    ShoppingListManager.RemoveProductFromList(listOfProducts);
+                    ShoppingListManager.DisplayActualListOfProducts(listOfProducts);
                     break;
                 }
                 else if (intNumberOfOperation == 4)
@@ -142,10 +163,10 @@ namespace ListaZakupow
         {
             while (true)
             {
-                int intNumberOfOperation = Calculate.ChoiseOperations(listOfOperations);
+                int intNumberOfOperation = ChoiseOperations(listOfOperations);
                 if (intNumberOfOperation >= 1 && intNumberOfOperation <= 3)
                 {
-                    Calculate.PerformOperation(listOfOperations, intNumberOfOperation, listOfProducts);
+                    PerformOperation(listOfOperations, intNumberOfOperation, listOfProducts);
                 }
                 else if (intNumberOfOperation == 4)
                 { break; }
