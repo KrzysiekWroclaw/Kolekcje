@@ -12,36 +12,28 @@ namespace ListaZakupow
         {
             Console.WriteLine("Podaj nazwę produktu do dodania:");
             string product = Console.ReadLine();
-
-            ////
-            if(listOfProducts.Count == 0)
+            
+            string? foundElement = null;
+            foreach (string item in listOfProducts)
             {
-                listOfProducts.Add(product);
-                Console.WriteLine($"\nProdukt \"{product}\" dodany do listy zakupów!\n");
+                int result = string.Compare(item, product, true);
+
+                if (result == 0)
+                {
+                    foundElement = item;
+                    break;
+                }
+            }
+            if (foundElement != null)
+            {
+                Console.WriteLine($"\nNie dodano produktu {product}, bo jest już na liście!\n");
             }
             else
             {
-                foreach (string item in listOfProducts)
-                {
-                    int result = string.Compare(item, product, true);
-
-                    if (result == 0)
-                    {
-                        Console.WriteLine($"Produkt {product} jest już na liście!");
-                        break;
-                    }
-                    else
-                    {
-                        listOfProducts.Add(product);
-                        Console.WriteLine($"\nProdukt \"{product}\" dodany do listy zakupów!\n");
-                    }
-                }
+                listOfProducts.Add(product);
+                Console.WriteLine($"Produkt \"{product}\" dodano do listy zakupów.\n");
             }
-            
-            
-
-
-            /////
+            DisplayActualListOfProducts(listOfProducts);
         }
 
         public static void DisplayActualListOfProducts(List<string> listOfProducts)
@@ -81,6 +73,7 @@ namespace ListaZakupow
             {
                 listOfProducts.Remove(foundElement);
                 Console.WriteLine($"\nProdukt \"{product}\" usunięty z listy zakupów!\n");
+                DisplayActualListOfProducts(listOfProducts);
             }
             else
             {
@@ -119,7 +112,7 @@ namespace ListaZakupow
             if (intNumberOfOperation == 1)
             {
                 AddProductToList(listOfProducts);
-                DisplayActualListOfProducts(listOfProducts);
+                //DisplayActualListOfProducts(listOfProducts);
             }
             else if (intNumberOfOperation == 2)
             {
@@ -138,7 +131,7 @@ namespace ListaZakupow
             {
                 return;
             }
-            DisplayActualListOfProducts(listOfProducts);
+            //DisplayActualListOfProducts(listOfProducts);
         }
 
 
