@@ -12,8 +12,36 @@ namespace ListaZakupow
         {
             Console.WriteLine("Podaj nazwę produktu do dodania:");
             string product = Console.ReadLine();
-            listOfProducts.Add(product);
-            Console.WriteLine($"\nProdukt \"{product}\" dodany do listy zakupów!\n");
+
+            ////
+            if(listOfProducts.Count == 0)
+            {
+                listOfProducts.Add(product);
+                Console.WriteLine($"\nProdukt \"{product}\" dodany do listy zakupów!\n");
+            }
+            else
+            {
+                foreach (string item in listOfProducts)
+                {
+                    int result = string.Compare(item, product, true);
+
+                    if (result == 0)
+                    {
+                        Console.WriteLine($"Produkt {product} jest już na liście!");
+                        break;
+                    }
+                    else
+                    {
+                        listOfProducts.Add(product);
+                        Console.WriteLine($"\nProdukt \"{product}\" dodany do listy zakupów!\n");
+                    }
+                }
+            }
+            
+            
+
+
+            /////
         }
 
         public static void DisplayActualListOfProducts(List<string> listOfProducts)
@@ -38,74 +66,31 @@ namespace ListaZakupow
             Console.WriteLine("Podaj nazwę produktu do usunięcia:");
             string product = Console.ReadLine();
 
-
-            try //usunąć is dać pętlę
+            string? foundElement = null;
+            foreach (string item in listOfProducts)
             {
-                int indexOflistOfProducts = 0; //tą zmienną usunąć
-                string itemOflistOfProducts = listOfProducts[indexOflistOfProducts]; //usunąć
-                char firstLetterItemOflistOfProducts = itemOflistOfProducts[0];
-                int i = 0;
+                int result = string.Compare(item, product, true);
 
-
-                string? foundElement = null;
-                foreach (string item in listOfProducts)
+                if (result == 0)
                 {
-                    int result = string.Compare(item, product, true);
-
-                    if (result == 0)
-                    {
-                        foundElement = item;
-                        break;
-                    }
+                    foundElement = item;
+                    break;
                 }
-                if (foundElement != null)
-                {
-                    listOfProducts.Remove(foundElement);
-                }
-
-                //if (listOfProducts.Contains(product))
-                //{
-                //    listOfProducts.Remove(product);
-                //    Console.WriteLine($"\nProdukt \"{product}\" usunięty z listy zakupów!\n");
-                //}
-                //else
-                //{
-                //    Console.WriteLine($"Artykułu \"{product}\" nie ma na liście!\n");
-                //}
             }
-            catch (ArgumentOutOfRangeException e)
+            if (foundElement != null)
             {
-                Console.WriteLine("Koszyk pusty. Brak produktów do usunięcia.\n");
-            } //string Compare - wykorzystać tą funkcję
-
-            //else
-            //{
-            //    for (int j = 0; j < listOfProducts.Count; j++)
-            //    {
-            //        for (i = 0; i < itemOflistOfProducts.Length; i++)
-            //        {
-            //            if (char.ToUpper(itemOflistOfProducts[i]) == product[i] || char.ToUpper(product[i]) == itemOflistOfProducts[i] || itemOflistOfProducts[i] == product[i])
-            //            {
-            //                itemOflistOfProducts = listOfProducts[i];
-            //            }
-            //            if (i + 1 == itemOflistOfProducts.Length)
-            //            {
-            //                listOfProducts.Remove(listOfProducts[0]);
-            //                Console.WriteLine($"\nProdukt \"{product}\" usunięty z listy zakupów!\n");
-            //            }
-            //            else
-            //            {
-            //                Console.WriteLine($" 1 Artykułu \"{product}\" nie ma na liście!\n");
-            //            }
-            //        }
-            //    }
-            //}               
+                listOfProducts.Remove(foundElement);
+                Console.WriteLine($"\nProdukt \"{product}\" usunięty z listy zakupów!\n");
+            }
+            else
+            {
+                Console.WriteLine($"Produktu \"{product}\" nie ma na liście!\n");
+            }
         }
 
         public static int ChoiseOperations(List<string> listOfOperations)
         {
             int intNumberOfOperation;
-
 
             Console.WriteLine("Wybierz operację:\n");
             foreach (string operation in listOfOperations)
@@ -115,8 +100,8 @@ namespace ListaZakupow
             string stringNumberOfOperation = Console.ReadLine();
 
             if (int.TryParse(stringNumberOfOperation, out intNumberOfOperation)
-            && intNumberOfOperation >= 1
-            && intNumberOfOperation <= listOfOperations.Count)
+                            && intNumberOfOperation >= 1
+                            && intNumberOfOperation <= listOfOperations.Count)
             {
                 Console.WriteLine($"Twój wybór: {intNumberOfOperation}\n");
                 return intNumberOfOperation;
@@ -128,49 +113,51 @@ namespace ListaZakupow
             return intNumberOfOperation;
         }
 
-        public static void PerformOperation(List<string> listOfOperations, //usunąć listofoperation
-            int intNumberOfOperation,
-            List<string> listOfProducts)
+        public static void PerformOperation(int intNumberOfOperation,
+                                            List<string> listOfProducts)
         {
-            bool cont = true;
-            while (cont)
+            if (intNumberOfOperation == 1)
             {
-                if (intNumberOfOperation == 1)
-                {
-                    ShoppingListManager.AddProductToList(listOfProducts);
-                    ShoppingListManager.DisplayActualListOfProducts(listOfProducts);
-                    break;
-                }
-                else if (intNumberOfOperation == 2)
-                {
-                    ShoppingListManager.DisplayActualListOfProducts(listOfProducts);
-                    break;
-                }
-                else if (intNumberOfOperation == 3)
-                {
-                    ShoppingListManager.RemoveProductFromList(listOfProducts);
-                    ShoppingListManager.DisplayActualListOfProducts(listOfProducts);
-                    break;
-                }
-                else if (intNumberOfOperation == 4)
-                {
-                    break;
-                }
+                AddProductToList(listOfProducts);
+                DisplayActualListOfProducts(listOfProducts);
             }
+            else if (intNumberOfOperation == 2)
+            {
+                DisplayActualListOfProducts(listOfProducts);
+
+            }
+            else if (intNumberOfOperation == 3)
+            {
+                if (listOfProducts.Count != 0)
+                {
+                    RemoveProductFromList(listOfProducts);
+                }
+                else { Console.WriteLine("Koszyk pusty. Brak produktów do usunięcia.\n"); }
+            }
+            else if (intNumberOfOperation == 4)
+            {
+                return;
+            }
+            DisplayActualListOfProducts(listOfProducts);
         }
 
-        public static void IterationOfChoiseOfOperation(List<string> listOfOperations, List<string> listOfProducts)
+
+        public static void IterationOfChoiseOfOperation(List<string> listOfProducts)
         {
+            List<string> listOfOperations = new List<string>() { "1. Dodaj produkt do listy", "2. Wyświetl listę zakupów", "3. Usuń produkt z listy", "4. Zakończ program\n" }; //przenieść do klasy Shopping...
             while (true)
             {
                 int intNumberOfOperation = ChoiseOperations(listOfOperations);
+
+
                 if (intNumberOfOperation >= 1 && intNumberOfOperation <= 3)
                 {
-                    PerformOperation(listOfOperations, intNumberOfOperation, listOfProducts);
+                    PerformOperation(intNumberOfOperation, listOfProducts);
                 }
                 else if (intNumberOfOperation == 4)
                 { break; }
             }
+
         }
     }
 }
