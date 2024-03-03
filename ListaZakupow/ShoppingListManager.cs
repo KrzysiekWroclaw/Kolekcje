@@ -10,7 +10,7 @@ namespace ListaZakupow
     {
         public static void AddProductToList(List<string> listOfProducts)
         {
-            Console.WriteLine("Podaj nazwę produktu do dodania:");          //test
+            Console.WriteLine("Podaj nazwę produktu do dodania:");
             string product = Console.ReadLine();
 
             string? foundElement = null;
@@ -112,7 +112,6 @@ namespace ListaZakupow
             if (intNumberOfOperation == 1)
             {
                 AddProductToList(listOfProducts);
-                //DisplayActualListOfProducts(listOfProducts);
             }
             else if (intNumberOfOperation == 2)
             {
@@ -131,7 +130,6 @@ namespace ListaZakupow
             {
                 return;
             }
-            //DisplayActualListOfProducts(listOfProducts);
         }
 
 
