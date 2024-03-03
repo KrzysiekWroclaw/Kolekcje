@@ -10,9 +10,9 @@ namespace ListaZakupow
     {
         public static void AddProductToList(List<string> listOfProducts)
         {
-            Console.WriteLine("Podaj nazwę produktu do dodania:");
+            Console.WriteLine("Podaj nazwę produktu do dodania:");          //test
             string product = Console.ReadLine();
-            
+
             string? foundElement = null;
             foreach (string item in listOfProducts)
             {
@@ -137,7 +137,8 @@ namespace ListaZakupow
 
         public static void IterationOfChoiseOfOperation(List<string> listOfProducts)
         {
-            List<string> listOfOperations = new List<string>() { "1. Dodaj produkt do listy", "2. Wyświetl listę zakupów", "3. Usuń produkt z listy", "4. Zakończ program\n" }; //przenieść do klasy Shopping...
+            List<string> listOfOperations = new List<string>() { "1. Dodaj produkt do listy", "2. Wyświetl listę zakupów",
+                                                                "3. Usuń produkt z listy", "4. Zakończ program\n" };
             while (true)
             {
                 int intNumberOfOperation = ChoiseOperations(listOfOperations);
@@ -147,7 +148,7 @@ namespace ListaZakupow
                 {
                     PerformOperation(intNumberOfOperation, listOfProducts);
                 }
-                else if (intNumberOfOperation == 4)
+                else if (intNumberOfOperation == (listOfOperations.Count))
                 { break; }
             }
 
