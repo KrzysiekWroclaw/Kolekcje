@@ -10,7 +10,7 @@ namespace ListaZakupowDictionary_String_Int
         public static void Main(string[] args)
         {
             Console.WriteLine("Program \"Lista zakupów\".\n");
-            ShoppingListManager.IterationOfChoiseOfOperation();
+            ShoppingListManager.ShowMenu();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ListaZakupowDictionary_String_Int
 {
     public class ShoppingListManager
     {
-        public static void IterationOfChoiseOfOperation()
+        public static void ShowMenu()
         {
             Dictionary<string, int> listOfProducts = new Dictionary<string, int>();
 
@@ -20,13 +20,13 @@ namespace ListaZakupowDictionary_String_Int
                                                                                    };
             while (true)
             {
-                int intNumberOfOperation = ChoiseOperations(listOfOperations);
+                int numberOfOperation = ChoiseOperations(listOfOperations);
 
-                if (intNumberOfOperation >= 1 && intNumberOfOperation <= 3)
+                if (numberOfOperation >= 1 && numberOfOperation <= 3)
                 {
-                    PerformOperation(intNumberOfOperation, listOfProducts);
+                    PerformOperation(numberOfOperation, listOfProducts);
                 }
-                else if (intNumberOfOperation == 4)
+                else if (numberOfOperation == 4)
                 { break; }
             }
         }
