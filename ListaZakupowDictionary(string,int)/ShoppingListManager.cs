@@ -26,9 +26,10 @@ namespace ListaZakupowDictionary_String_Int
                 {
                     PerformOperation(intNumberOfOperation, listOfProducts);
                 }
-                else if (intNumberOfOperation == listOfOperations.Count)
+                else if (intNumberOfOperation == 4)
                 { break; }
-            }        }
+            }
+        }
 
         public static int ChoiseOperations(Dictionary<int, string> listOfOperations)
         {
@@ -116,22 +117,9 @@ namespace ListaZakupowDictionary_String_Int
         public static void RemoveProductFromList(Dictionary<string, int> listOfProducts)
         {
             Console.WriteLine("Podaj nazwę produktu do usunięcia:");
-            string product = Console.ReadLine();
+            string? product = Console.ReadLine();
 
-            string? foundElement = null;
-
-            foreach (var kvp in listOfProducts)
-            {
-                int result = string.Compare(kvp.Key, product, true);
-
-                if (result == 0)
-                {
-                    foundElement = kvp.Key;
-                    break;
-                }
-            }
-            Console.WriteLine();
-            if (foundElement != null)
+            if (product != null && listOfProducts.ContainsKey(product))
             {
                 listOfProducts.Remove(product);
                 Console.WriteLine($"\nProdukt \"{product}\" usunięty z listy zakupów!\n");
@@ -140,7 +128,8 @@ namespace ListaZakupowDictionary_String_Int
             {
                 Console.WriteLine($"Produktu \"{product}\" nie ma na liście!\n");
             }
-            DisplayActualListOfProducts(listOfProducts);
+           Console.WriteLine();
+           DisplayActualListOfProducts(listOfProducts);
         }
     }
 }
