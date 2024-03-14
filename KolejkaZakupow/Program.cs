@@ -37,7 +37,6 @@ namespace KolejkaZakupow
                     Console.WriteLine("Twój wybór: 1");
                     basketList = Operations.GetNewBasket();
                     basketsQueue.Enqueue(basketList);
-
                 }
                 else if (operationNumber == 2)
                 {
@@ -48,7 +47,7 @@ namespace KolejkaZakupow
                 {
                     Console.WriteLine("Twój wybór: 3");                    
                     
-                    Operations.DecisionYorN(basketsQueue, kassQueue);
+                    Operations.MoveBasketsFromQueue(basketsQueue, kassQueue);
                     Operations.DisplayBasketsInKassQueue(kassQueue);
                     break;
                 }

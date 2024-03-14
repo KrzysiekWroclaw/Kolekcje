@@ -15,10 +15,6 @@ namespace KolejkaZakupow
             string? entireText = Console.ReadLine();
             string[] basketTab = entireText.Split(' ');
             List<string> basketList = new List<string>(basketTab);
-            Queue<List<string>> basketsQueue = new Queue<List<string>>();
-            Queue<List<string>> kassQueue = new Queue<List<string>>();
-
-            basketsQueue.Enqueue(basketList);
 
             Console.WriteLine("Następujące produkty dodane zostały do kolejki klientów: ");
 
@@ -50,8 +46,8 @@ namespace KolejkaZakupow
                 Console.WriteLine("Kolejka koszyków jest pusta. Brak koszyków do przesunięcia.\n");
             }
         }
-        public static void DecisionYorN(Queue<List<string>> basketsQueue,
-                                        Queue<List<string>> kassQueue)
+        public static void MoveBasketsFromQueue(Queue<List<string>> basketsQueue,
+                                                Queue<List<string>> kassQueue)
         {
             if (basketsQueue.Count > 0)
             {
@@ -66,15 +62,7 @@ namespace KolejkaZakupow
                         Operations.MoveBasketToKassQueue(basketsQueue, kassQueue);
                     }
                 }
-                else if (yesOrNo == "nie")
-                {
-                    Operations.MoveBasketToKassQueue(basketsQueue, kassQueue);
-                }
             }
-            else
-            {
-                Operations.MoveBasketToKassQueue(basketsQueue, kassQueue);
-            }        
         }
         public static void DisplayBasketsInKassQueue(Queue<List<string>> kassQueue)
         {
@@ -82,23 +70,16 @@ namespace KolejkaZakupow
             {
                 Console.WriteLine("Lista koszyków w kolejce kasowej: ");
                 int i = 1;
-                foreach (List<string> list in kassQueue)
+
+
+                foreach (var basket in kassQueue)
                 {
                     Console.Write($"{i}. ");
-                    int j = 1;
-                    foreach (var item in list)
-                    {
-                        Console.Write($"{item}");
-                        if (j < (list.Count))
-                        {
-                            Console.Write(", ");
-                            j++;
-                        }
-                    }
+                    Console.Write(string.Join(", ", basket));
                     i++;
                     Console.WriteLine();
                 }
-            }            
+            }
             Console.WriteLine("Program zakończony.");
         }
     }
