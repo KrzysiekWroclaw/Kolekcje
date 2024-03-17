@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZbieranieUnikalnychSlow", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprawdzaniePoprawnosciNawiasow", "SprawdzaniePoprawnosciNawiasow\SprawdzaniePoprawnosciNawiasow.csproj", "{184765D6-807E-4FD1-8182-D876707EDC76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1_BMI", "1_BMI\1_BMI.csproj", "{FAC8D9A0-BA38-44ED-833F-EFDBC4E16050}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{184765D6-807E-4FD1-8182-D876707EDC76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{184765D6-807E-4FD1-8182-D876707EDC76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{184765D6-807E-4FD1-8182-D876707EDC76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAC8D9A0-BA38-44ED-833F-EFDBC4E16050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAC8D9A0-BA38-44ED-833F-EFDBC4E16050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAC8D9A0-BA38-44ED-833F-EFDBC4E16050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAC8D9A0-BA38-44ED-833F-EFDBC4E16050}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
