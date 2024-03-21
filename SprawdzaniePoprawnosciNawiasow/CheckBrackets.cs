@@ -8,80 +8,72 @@ namespace SprawdzaniePoprawnosciNawiasow
 {
     public class CheckBrackets
     {
-        public static void iterateThroughCharacters(string entireText)
+        public static void CheckClosingBrWithoutOpeningBr(string entireText, char lastOpeningBracket)
         {
-            Stack<char> openBracketsStack = new Stack<char>();
-            
+            Stack<char> openingBracketsStack = new Stack<char>();
             foreach (char character in entireText)
             {
                 if (character == '(' || character == '[' || character == '{')
                 {
-                    openBracketsStack.Push(character);
-                }
+                    openingBracketsStack.Push(character);
 
-                char lastOpenedBracket;
-                if ((character == ')' || character == ']' || character == '}'))
+                }
+                else if (character == ')' || character == ']' || character == '}')
                 {
-                    lastOpenedBracket = openBracketsStack.Pop();
-
-                    if (character == ')' && lastOpenedBracket != '(')
+                    if (openingBracketsStack.Count > 0)
                     {
-                        Console.WriteLine("Napotkano nawias zamykający ) bez wcześniejszego nawiasu otwierającego.");
+                        lastOpeningBracket = openingBracketsStack.Pop();
                     }
-                    if (character != ')' && lastOpenedBracket == '(')
+                    if (
+                        (character == ')' && lastOpeningBracket != '(') ||
+                        (character == ']' && lastOpeningBracket != '[') ||
+                        (character == '}' && lastOpeningBracket != '{')
+                        )
                     {
-                        Console.WriteLine("Brakuje nawiasu zamykającego ).");
-                    }
-                    if (character == ')' && (lastOpenedBracket == '['))
-                    {
-                        Console.WriteLine("Nawias zamykający ) nie pasuje do otwierającego [. ");
-                    }
-                    if (character == ')' && lastOpenedBracket == '{')
-                    {
-                        Console.WriteLine("Nawias zamykający ) nie pasuje do otwierającego {. ");
-                    }
-
-
-
-                    if (character == ']' && lastOpenedBracket != '[')
-                    {
-                        Console.WriteLine("Napotkano nawias zamykający ] bez wcześniejszego nawiasu otwierającego.");
-                    }
-                    if (character != ']' && lastOpenedBracket == '[')
-                    {
-                        Console.WriteLine("Brakuje nawiasu zamykającego ].");
-                    }
-                    if (character == ']' && (lastOpenedBracket == '('))
-                    {
-                        Console.WriteLine("Nawias zamykający ] nie pasuje do otwierającego (. ");
-                    }
-                    if (character == ']' && lastOpenedBracket == '{')
-                    {
-                        Console.WriteLine("Nawias zamykający ) nie pasuje do otwierającego {. ");
-                    }
-
-
-
-
-                    if (character == '}' && lastOpenedBracket != '{')
-                    {
-                        Console.WriteLine("Napotkano nawias zamykający } bez wcześniejszego nawiasu otwierającego.");
-                    }
-                    if (character != '}' && lastOpenedBracket == '{')
-                    {
-                        Console.WriteLine("Brakuje nawiasu zamykającego }.");
-                    }
-                    if (character == '}' && (lastOpenedBracket == '('))
-                    {
-                        Console.WriteLine("Nawias zamykający } nie pasuje do otwierającego (. ");
-                    }
-                    if (character == '}' && lastOpenedBracket == '[')
-                    {
-                        Console.WriteLine("Nawias zamykający } nie pasuje do otwierającego [. ");
+                        Console.WriteLine($"Napotkano nawias zamykający {character}" +
+                                          $" bez wcześniejszego nawiasu otwierającego.");
                     }
                 }
-                    
-                
+            }
+        }
+
+
+
+        public static void CheckExistsClosingBraket(string entireText)
+        {
+            Stack<char> openingBracketsStack = new Stack<char>();
+            foreach (char character in entireText)
+            {
+                if (character == '(' || character == '[' || character == '{')
+                {
+                    openingBracketsStack.Push(character);
+                }
+                else if (character == ')' || character == ']' || character == '}')
+                {
+                    if (openingBracketsStack.Count > 0)
+                    {
+                        openingBracketsStack.Pop();
+                    }
+                }
+            }
+
+            if (openingBracketsStack.Count > 0)
+            {
+                foreach (char ch in openingBracketsStack)
+                {
+                    if (ch == '(')
+                    {
+                        Console.WriteLine("Brakuje nawiasu zamykającego )");
+                    }
+                    if (ch == '{')
+                    {
+                        Console.WriteLine("Brakuje nawiasu zamykającego }");
+                    }
+                    if (ch == '[')
+                    {
+                        Console.WriteLine("Brakuje nawiasu zamykającego ]");
+                    }
+                }
             }
         }
     }
