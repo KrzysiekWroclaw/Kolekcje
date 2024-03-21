@@ -6,40 +6,53 @@ using System.Threading.Tasks;
 
 namespace SprawdzaniePoprawnosciNawiasow
 {
-    public class CheckBrackets
+    public class BracketsChecker
     {
-        public static void CheckExistsClosingBrWithoutOpeningBr(string entireText, char lastOpeningBracket)
+        public void CheckBrackets(string entireText)
+        {
+            CheckExistsClosingBrWithoutOpeningBr(entireText);
+            Console.WriteLine();
+
+            CheckExistsClosingBraket(entireText);
+            Console.WriteLine();
+
+            CheckCompatibilityClosingToOpeningBracket(entireText);
+        }
+        private void CheckExistsClosingBrWithoutOpeningBr(string entireText)
         {
             Stack<char> openingBracketsStack = new Stack<char>();
+            char lastOpeningBracket = new char();
             foreach (char character in entireText)
             {
-                if (character == '(' || character == '[' || character == '{')
+                if (character != '(' && character != '[' && character != '{')
+                {
+                    if (character == ')' || character == ']' || character == '}')
+                    {
+                        if (openingBracketsStack.Count > 0)
+                        {
+                            lastOpeningBracket = openingBracketsStack.Pop();
+                        }
+                        if (
+                            (character == ')' && lastOpeningBracket != '(') ||
+                            (character == ']' && lastOpeningBracket != '[') ||
+                            (character == '}' && lastOpeningBracket != '{')
+                            )
+                        {
+                            Console.WriteLine("Wyrażenie matematyczne nie jest poprawne pod względem nawiasów. ");
+                            Console.WriteLine($"Napotkano nawias zamykający {character}" +
+                                              $" bez wcześniejszego nawiasu otwierającego.");
+                        }
+                    }
+                }
+                else
                 {
                     openingBracketsStack.Push(character);
-
-                }
-                else if (character == ')' || character == ']' || character == '}')
-                {
-                    if (openingBracketsStack.Count > 0)
-                    {
-                        lastOpeningBracket = openingBracketsStack.Pop();
-                    }
-                    if (
-                        (character == ')' && lastOpeningBracket != '(') ||
-                        (character == ']' && lastOpeningBracket != '[') ||
-                        (character == '}' && lastOpeningBracket != '{')
-                        )
-                    {
-                        Console.WriteLine("Wyrażenie matematyczne nie jest poprawne pod względem nawiasów. ");
-                        Console.WriteLine($"Napotkano nawias zamykający {character}" +
-                                          $" bez wcześniejszego nawiasu otwierającego.");
-                    }
                 }
             }
             
         }
 
-        public static void CheckExistsClosingBraket(string entireText)
+        private void CheckExistsClosingBraket(string entireText)
         {
             Stack<char> openingBracketsStack = new Stack<char>();
             foreach (char character in entireText)
@@ -80,9 +93,11 @@ namespace SprawdzaniePoprawnosciNawiasow
             }
         }
 
-        public static void CheckCompatibilityClosingToOpeningBracket(string entireText, char lastOpeningBracket)
+        private void CheckCompatibilityClosingToOpeningBracket(string entireText)
         {
             Stack<char> openingBracketsStack = new Stack<char>();
+            char lastOpeningBracket = new char();
+
             foreach (char character in entireText)
             {
                 if (character == '(' || character == '[' || character == '{')

@@ -10,16 +10,21 @@ namespace SprawdzaniePoprawnosciNawiasow
             Console.WriteLine("Program: Sprawdzanie poprawności nawiasów.\n" +
                              "Wprowadź wyrażenie matematyczne: ");
             string? entireText = Console.ReadLine();
+           
+            if (entireText != null)
+            {
+                BracketsChecker bracketsChecker = new BracketsChecker();
+                bracketsChecker.CheckBrackets(entireText);
+            }
+            else
+            {
+                Console.WriteLine("Nie wprowadzono żadnych wartości.");
+                return;
+            }
 
-            char lastOpeningBracket = new char();
 
-            CheckBrackets.CheckExistsClosingBrWithoutOpeningBr(entireText, lastOpeningBracket);
-            Console.WriteLine();
 
-            CheckBrackets.CheckExistsClosingBraket(entireText);
-            Console.WriteLine();
-            
-            CheckBrackets.CheckCompatibilityClosingToOpeningBracket(entireText, lastOpeningBracket);
+
         }
     }
 }
