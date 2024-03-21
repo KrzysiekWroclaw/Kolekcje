@@ -7,17 +7,19 @@ namespace SprawdzaniePoprawnosciNawiasow
     {
         public static void Main(string[] args)
         {
-
             Console.WriteLine("Program: Sprawdzanie poprawności nawiasów.\n" +
                              "Wprowadź wyrażenie matematyczne: ");
             string? entireText = Console.ReadLine();
 
             char lastOpeningBracket = new char();
 
-            CheckBrackets.CheckClosingBrWithoutOpeningBr(entireText, lastOpeningBracket);
+            CheckBrackets.CheckExistsClosingBrWithoutOpeningBr(entireText, lastOpeningBracket);
+            Console.WriteLine();
+
             CheckBrackets.CheckExistsClosingBraket(entireText);
-
-
+            Console.WriteLine();
+            
+            CheckBrackets.CheckCompatibilityClosingToOpeningBracket(entireText, lastOpeningBracket);
         }
     }
 }
