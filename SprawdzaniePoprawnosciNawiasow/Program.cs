@@ -19,7 +19,7 @@ namespace SprawdzaniePoprawnosciNawiasow
             else
             {
                 Console.WriteLine("Nie wprowadzono żadnych wartości.");
-                return;
+                
             }
 
 

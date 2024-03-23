@@ -33,6 +33,26 @@ namespace SprawdzaniePoprawnosciNawiasow
             }
             else return false;
         }
+
+        private char GetCorrectOpeningBrForClosingBr(char character)
+        {
+            char correctOpeningBrForClosingBr = ' ';
+
+            if (character == ')')
+            {
+                correctOpeningBrForClosingBr = '(';
+            }
+            else if (character == ']')
+            {
+                correctOpeningBrForClosingBr = '[';
+            }
+            else if (character == '}')
+            {
+                correctOpeningBrForClosingBr = '{';
+            }
+            return correctOpeningBrForClosingBr;
+        }
+
         private Stack<char> AddOpeningBracketToOpeningBrStack(char character, Stack<char> openingBracketsStack)
         {
             openingBracketsStack.Push(character);
@@ -42,31 +62,10 @@ namespace SprawdzaniePoprawnosciNawiasow
         {
             char lastOpeningBracket = openingBracketsStack.Pop();
             return lastOpeningBracket;
-            
-        }
-        private bool IsIncorrectOpeningToClosingBracket(char character, char lastOpeningBracket)
-        {
-            if ((character == ')' && lastOpeningBracket != '(') ||
-                (character == ']' && lastOpeningBracket != '[') ||
-                (character == '}' && lastOpeningBracket != '{')
-              )
-                return true;
-            else
-            { return false; }
-        }
-        private bool MatchesOpeningBracketToClosingBracket(char character, char lastOpeningBracket)
-        {
 
-          if    (
-                character == ')' && (lastOpeningBracket == '[' || lastOpeningBracket == '{') ||
-                character == ']' && (lastOpeningBracket == '(' || lastOpeningBracket == '{') ||
-                character == '}' && (lastOpeningBracket == '[' || lastOpeningBracket == '(')
-                )
-                    return true;
-          else return false;
         }
 
-
+        
         private void CheckExistsClosingBrWithoutOpeningBr(string entireText)
         {
             Stack<char> openingBracketsStack = new Stack<char>();
@@ -84,7 +83,7 @@ namespace SprawdzaniePoprawnosciNawiasow
                         lastOpeningBracket = GetLastOpeningBracket(openingBracketsStack);
                     }
 
-                    if (IsIncorrectOpeningToClosingBracket(character, lastOpeningBracket))
+                    if (lastOpeningBracket != GetCorrectOpeningBrForClosingBr(character))
                     {
                         Console.WriteLine("Wyrażenie matematyczne nie jest poprawne pod względem nawiasów. ");
                         Console.WriteLine($"Napotkano nawias zamykający {character}" +
@@ -147,21 +146,24 @@ namespace SprawdzaniePoprawnosciNawiasow
                 {
                     AddOpeningBracketToOpeningBrStack(character, openingBracketsStack);
                 }
-                else if (character == ')' || character == ']' || character == '}')
+                else if (IsClosingBracket(character))
                 {
                     if (openingBracketsStack.Count > 0)
                     {
                         lastOpeningBracket = GetLastOpeningBracket(openingBracketsStack);
                     }
-                    if (MatchesOpeningBracketToClosingBracket(character, lastOpeningBracket))
-                    {
-                        Console.WriteLine("Wyrażenie matematyczne nie jest poprawne pod względem nawiasów.");
-                        Console.WriteLine($"Nawias zamykający {character} nie pasuje do nawiasu" +
-                            $" otwierającego {lastOpeningBracket}.");
+                    if (IsClosingBracket(character) && IsOpeningBracket(lastOpeningBracket))
+                    {   
+                        if (GetCorrectOpeningBrForClosingBr(character) != lastOpeningBracket)
+                        {
+                            Console.WriteLine("Wyrażenie matematyczne nie jest poprawne pod względem nawiasów.");
+                            Console.WriteLine($"Nawias zamykający {character} nie pasuje do nawiasu" +
+                                $" otwierającego {lastOpeningBracket}.");
+                        }
                     }
+
                 }
             }
-
         }
     }
 }
