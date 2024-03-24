@@ -10,11 +10,12 @@ namespace SprawdzaniePoprawnosciNawiasow
     {
         public void CheckBrackets(string entireText)
         {
-            CheckExistsClosingBrWithoutOpeningBr(entireText);
-            Console.WriteLine();
-            CheckExistsClosingBracket(entireText);
-            Console.WriteLine();
-            CheckCompatibilityClosingToOpeningBracket(entireText);
+            foreach (char character in entireText)
+            {
+                CheckExistsClosingBrWithoutOpeningBr(character);
+                CheckExistsClosingBracket(character);
+                CheckCompatibilityClosingToOpeningBracket(character);
+            }
         }
 
         private bool IsOpeningBracket(char character)
@@ -32,6 +33,12 @@ namespace SprawdzaniePoprawnosciNawiasow
                 return true;
             }
             else return false;
+        }
+
+        private char GetLastOpeningBracket(Stack<char> openingBracketsStack)
+        {
+            char lastOpeningBracket = openingBracketsStack.Pop();
+            return lastOpeningBracket;
         }
 
         private char GetCorrectOpeningBrForClosingBr(char character)
@@ -58,20 +65,12 @@ namespace SprawdzaniePoprawnosciNawiasow
             openingBracketsStack.Push(character);
             return openingBracketsStack;
         }
-        private char GetLastOpeningBracket(Stack<char> openingBracketsStack)
-        {
-            char lastOpeningBracket = openingBracketsStack.Pop();
-            return lastOpeningBracket;
 
-        }
 
-        
-        private void CheckExistsClosingBrWithoutOpeningBr(string entireText)
+        private void CheckExistsClosingBrWithoutOpeningBr(char character)
         {
             Stack<char> openingBracketsStack = new Stack<char>();
             char lastOpeningBracket = new char();
-            foreach (char character in entireText)
-            {
                 if (IsOpeningBracket(character))
                 {
                     AddOpeningBracketToOpeningBrStack(character, openingBracketsStack);
@@ -90,14 +89,12 @@ namespace SprawdzaniePoprawnosciNawiasow
                                           $" bez wcześniejszego nawiasu otwierającego.");
                     }
                 }
-            }
         }
 
-        private void CheckExistsClosingBracket(string entireText)
+        private void CheckExistsClosingBracket(char character)
         {
             Stack<char> openingBracketsStack = new Stack<char>();
-            char lastOpeningBracket = new char();
-            foreach (char character in entireText)
+            char lastOpeningBracket = new char();           
             {
                 if (IsOpeningBracket(character))
                 {
@@ -135,12 +132,10 @@ namespace SprawdzaniePoprawnosciNawiasow
             }
 
         }
-        private void CheckCompatibilityClosingToOpeningBracket(string entireText)
+        private void CheckCompatibilityClosingToOpeningBracket(char character)
         {
             Stack<char> openingBracketsStack = new Stack<char>();
-            char lastOpeningBracket = new char();
-
-            foreach (char character in entireText)
+            char lastOpeningBracket = new char();            
             {
                 if (IsOpeningBracket(character))
                 {
@@ -153,7 +148,7 @@ namespace SprawdzaniePoprawnosciNawiasow
                         lastOpeningBracket = GetLastOpeningBracket(openingBracketsStack);
                     }
                     if (IsClosingBracket(character) && IsOpeningBracket(lastOpeningBracket))
-                    {   
+                    {
                         if (GetCorrectOpeningBrForClosingBr(character) != lastOpeningBracket)
                         {
                             Console.WriteLine("Wyrażenie matematyczne nie jest poprawne pod względem nawiasów.");
@@ -161,7 +156,6 @@ namespace SprawdzaniePoprawnosciNawiasow
                                 $" otwierającego {lastOpeningBracket}.");
                         }
                     }
-
                 }
             }
         }
