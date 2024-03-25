@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace _1_BMI
 {
-    public class WeightCalculator //w osobnym pliku - zrobione
+    public class WeightCalculator
     {
-
         private bool CheckBMI(double minBMI, double maxBMI, double BMI)
         {
 
@@ -18,8 +17,6 @@ namespace _1_BMI
             }
             else { return false; }
         }
-
-
         public bool IsNormalWeight(int age, double BMI)
         {
             int liczba = 0;
@@ -32,7 +29,7 @@ namespace _1_BMI
                     return CheckBMI(20, 25, BMI);
                     break;
                 case 3 when (age <= 44 && BMI >= 21 && BMI <= 26):
-                        return CheckBMI(21, 26, BMI);
+                    return CheckBMI(21, 26, BMI);
                     break;
                 case 4 when (age <= 54 && BMI >= 22 && BMI <= 27):
                     return CheckBMI(22, 27, BMI);

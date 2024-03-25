@@ -44,8 +44,6 @@ namespace _1_BMI
                 else { break; }
             }
 
-
-
             Console.WriteLine("Podaj wzrost z dokładnością 2 miejsc po przecinku w [m]");
             double doubleHeight;
             while (true)
@@ -71,7 +69,6 @@ namespace _1_BMI
             WeightCalculator weightCalculator = new WeightCalculator();
             bool isNormalWeight = weightCalculator.IsNormalWeight(intAge, BMI);
 
-
             while (true)
             {
                 try
@@ -89,7 +86,6 @@ namespace _1_BMI
                     string isNormalWeightText = isNormalWeight ? ("TAK") : ("NIE");
                     sw.WriteLine("Pożądana masa ciała: {0}", isNormalWeightText);
                     break;
-
                 }
                 catch (System.ArgumentException e)
                 {
@@ -103,6 +99,3 @@ namespace _1_BMI
         }
     }
 }
-
-
-
