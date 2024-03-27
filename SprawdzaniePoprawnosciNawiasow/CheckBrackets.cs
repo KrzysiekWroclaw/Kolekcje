@@ -12,42 +12,43 @@ namespace SprawdzaniePoprawnosciNawiasow
         public void CheckBrackets(string entireText)
         {
             Stack<char> openingBracketsStack = new Stack<char>();
+            int index = 0;            
 
             foreach (char character in entireText)
             {
-                CheckingCompatibilitingBrakets(character, openingBracketsStack);
+                index++;
+                bool b = IsCompatibilitingBrakets(character, openingBracketsStack, entireText);
+                if (index == entireText.Length && b == true)
+                {
+                    IsOpeningBrWithoutClosingBr(openingBracketsStack);
+                }
             }
-            CheckIsOpeningBrWithoutClosingBr(openingBracketsStack);
-        }
+        }                               
 
-
-        private char? GetOppositeBracket(char character)
+        private char? GetOppositeBracket(char character)       
         {
-            if (character == ')')
+            switch (character)
             {
-                return '(';
+                case ')':
+                    return '(';
+                    
+                case ']':
+                    return '[';
+
+                case '}':
+                    return '{';
+                    
+                case '(':
+                    return ')';
+
+                case '[':
+                    return ']';
+
+                case '{':
+                    return '}';
+
+                default: return null;
             }
-            else if (character == ']')
-            {
-                return '[';
-            }
-            else if (character == '}')
-            {
-                return '{';
-            }
-            else if (character == '(')
-            {
-                return ')';
-            }
-            else if (character == '[')
-            {
-                return ']';
-            }
-            else if (character == '{')
-            {
-                return '}';
-            }
-            else return null;
         }
 
         private char? GetOpeningBracket(char character)
@@ -67,20 +68,38 @@ namespace SprawdzaniePoprawnosciNawiasow
             else return null;
         }
 
-        private bool CheckingCompatibilitingBrakets(char character, Stack<char> openingBracketsStack)
+        private Stack<char> PushCharToStack(char character, Stack<char> stack)
+        {
+            stack.Push(character);
+            return stack;
+        }
+
+        private char PeekCharFromStack(Stack<char> stack)
+        {
+            char character = stack.Peek();
+            return character;
+        }
+
+        private char PopCharFromStack(Stack<char> stack)
+        {
+            char character = stack.Pop();
+            return character;
+        }
+
+        private bool IsCompatibilitingBrakets(char character, Stack<char> openingBracketsStack, string entireText)
         {
             if (character == GetOpeningBracket(character))
             {
-                openingBracketsStack.Push(character);
+                PushCharToStack(character, openingBracketsStack);
             }
             else if (character == GetClosingBracket(character))
             {
                 if (openingBracketsStack.Count > 0)
                 {
-                    char lastOpeningBracket = openingBracketsStack.Peek();
+                    char lastOpeningBracket = PeekCharFromStack(openingBracketsStack);
                     if (character == GetOppositeBracket(lastOpeningBracket))
                     {
-                        openingBracketsStack.Pop();
+                        PopCharFromStack(openingBracketsStack);
                     }
                     else
                     {
@@ -96,10 +115,11 @@ namespace SprawdzaniePoprawnosciNawiasow
                     return false;
                 }
             }
-            return false;
+            return true;
         }
 
-        private void CheckIsOpeningBrWithoutClosingBr(Stack<char> openingBracketsStack)
+        
+        private bool IsOpeningBrWithoutClosingBr(Stack<char> openingBracketsStack)
         {
             if (openingBracketsStack.Count > 0)
             {
@@ -108,7 +128,9 @@ namespace SprawdzaniePoprawnosciNawiasow
                 {
                     Console.WriteLine($"Brakuje nawiasu zamykającego {GetOppositeBracket(character)}.");
                 }
+                return true;
             }
+            else return false;
         }
     }
 }
